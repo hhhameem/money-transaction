@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+        <title>Transaction</title>
+    </head>
+
+    <body>
+        <main class="w-10/12 mx-auto mt-12 bg-yellow-200 rounded-xl md:w-3/4">
+            <h1 class="text-center font-bold text-5xl text-green-600 pt-4 mb-12">Balance Transaction</h1>
+            <div class="m-4">
+                <div class="grid gap-4 mb-12 grid-cols-1 md:grid-cols-3">
+                    <div class="bg-purple-300 rounded-lg">
+                        <div class="p-8">
+                            <h2 class="text-2xl">Total Deposit</h2>
+                            <h1 class="text-3xl font-bold">৳ <span id="total-deposit">00</span></h1>
+                        </div>
+                    </div>
+                    <div class="bg-pink-300 rounded-lg">
+                        <div class="p-8">
+                            <h2 class="text-2xl">Total Withdraw</h2>
+                            <h1 class="text-3xl font-bold">৳ <span id="total-withdraw">00</span></h1>
+                        </div>
+                    </div>
+                    <div class="bg-indigo-300 rounded-lg">
+                        <div class="p-8">
+                            <h2 class="text-2xl">Total Balance</h2>
+                            <h1 class="text-3xl font-bold">৳ <span id="total-balance">2545</span></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid gap-4 pb-12 grid-cols-1 md:grid-cols-2">
+                    <div class="bg-green-300 rounded-lg">
+                        <div class="p-8">
+                            <h4 class="text-xl mb-4 font-semibold">Deposit Fund</h4>
+                            <input type="text" placeholder=" amount of ৳ you want to deposit"
+                                class="block h-8 rounded-md w-11/12 md:w-3/4" id="deposit-input">
+                            <button type="button" class="mt-4 px-4 py-2 bg-red-200
+                                rounded-md font-bold" id="deposit-button">
+                                Deposit
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-red-300 rounded-lg">
+                        <div class="p-8">
+                            <h4 class="text-xl mb-4 font-semibold">Withdraw Fund</h4>
+                            <input type="text" placeholder=" amount of ৳ you want to withdraw"
+                                class="block h-8 rounded-md w-11/12 md:w-3/4 " id="withdraw-input">
+                            <button type="button" class="mt-4 px-4 py-2 bg-red-200 
+                                rounded-md font-bold" id="withdraw-button">
+                                Withdraw
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="script.js"></script>
+    </body>
+
+</html>
