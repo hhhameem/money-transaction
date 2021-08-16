@@ -1,48 +1,65 @@
-//accessing components
-const totalDepositText = document.getElementById('total-deposit');
-const totalWithdrawText = document.getElementById('total-withdraw');
-const totalBalanceText = document.getElementById('total-balance');
+function updateValues(updateValueAmount, updateValueText, updateValueInputAmount) {
+    //update the existing total withdraw/deposit balance with input amount
+    updateValueAmount = updateValueAmount + updateValueInputAmount;
+    updateValueText.innerText = updateValueAmount;
+}
 
-//inner text to float conversion
-let totalDepositAmount = parseFloat(totalDepositText.innerText);
-let totalWithdrawAmount = parseFloat(totalWithdrawText.innerText);
-let totalBalanceAmount = parseFloat(totalBalanceText.innerText);
+function updateTotalBalance(totalBalanceAmount, updateValueInputAmount, totalBalanceText, isAdd) {
+    if (isAdd) {
+        //for deposite functionality
+        totalBalanceAmount = totalBalanceAmount + updateValueInputAmount;
+        totalBalanceText.innerText = totalBalanceAmount;
+    } else {
+        //for withdraw functionality
+        totalBalanceAmount = totalBalanceAmount - updateValueInputAmount;
+        totalBalanceText.innerText = totalBalanceAmount; 
+    }
+}
 
-//accessing deposit input components
-const depositInputText = document.getElementById('deposit-input');
-const depositButton = document.getElementById('deposit-button');
+function getValuesAndErrorCheck(totalTransactionAmount, transactionAmountInput, isAdd) {
+    //get the existing values from text field
+    const updateValueText = document.getElementById(totalTransactionAmount);
+    let updateValueAmount = parseFloat(updateValueText.innerText);
 
-//accessing withdraw input components
-const withdrawInputText = document.getElementById('withdraw-input');
-const withdrawButton = document.getElementById('withdraw-button');
+    //get the input value
+    const updateValueInputText = document.getElementById(transactionAmountInput);
+    const updateValueInputAmount = parseFloat(updateValueInputText.value);
+
+    //get the existing total balance
+    const totalBalanceText = document.getElementById('total-balance');
+    let totalBalanceAmount = parseFloat(totalBalanceText.innerText);
+
+    //check if input value is number or greate than 0
+    if(isNaN(updateValueInputAmount) || updateValueInputAmount < 0){
+       alert('Please Input a Positive Number');
+       updateValueInputText.value = '';
+    } else {
+        updateValueInputText.value = '';
+        //check if we want to withdraw or deposite balance
+        if (isAdd) {
+            updateValues(updateValueAmount, updateValueText, updateValueInputAmount);
+            updateTotalBalance(totalBalanceAmount, updateValueInputAmount, totalBalanceText, isAdd)
+        } else {
+            //check if there is sufficient value to withdraw
+            if (updateValueInputAmount <= totalBalanceAmount ) {
+                updateValues(updateValueAmount, updateValueText, updateValueInputAmount);
+                updateTotalBalance(totalBalanceAmount, updateValueInputAmount, totalBalanceText, isAdd)
+            }
+            else{
+                alert("Insufficient Fund");
+                updateValueInputText.value = '';
+            }
+            
+        }
+    }
+}
 
 //deposit functionality
-depositButton.addEventListener('click', function () {
-    const depositInputAmount = parseFloat(depositInputText.value);
-    if(isNaN(depositInputAmount)){
-       alert('Please Input a Number');
-    } else{
-        totalDepositAmount = totalDepositAmount + depositInputAmount;
-        totalBalanceAmount = totalBalanceAmount + depositInputAmount;
-        totalDepositText.innerText = totalDepositAmount;
-        totalBalanceText.innerText = totalBalanceAmount;
-        depositInputText.value = '';
-    }
+document.getElementById('deposit-button').addEventListener('click', function () {
+    getValuesAndErrorCheck('total-deposit', 'deposit-input', true);
 });
 
 //withdraw functionality
-withdrawButton.addEventListener('click', function () {
-    const withdrawInputAmount = parseFloat(withdrawInputText.value);
-    if(isNaN(withdrawInputAmount)){
-       alert('Please Input a Number');
-    } else if(withdrawInputAmount > totalBalanceAmount) {
-        alert('Not Enough Fund.');
-    }
-    else{
-        totalWithdrawAmount = totalWithdrawAmount + withdrawInputAmount;
-        totalBalanceAmount = totalBalanceAmount - withdrawInputAmount;
-        totalWithdrawText.innerText = totalWithdrawAmount;
-        totalBalanceText.innerText = totalBalanceAmount;
-        withdrawInputText.value = '';
-    }
+document.getElementById('withdraw-button').addEventListener('click', function () {
+    getValuesAndErrorCheck('total-withdraw', 'withdraw-input', false);
 });
